@@ -26,7 +26,7 @@ Create a base boilerplate dashboard app showing how easy it is to get started wi
 
 ### Requirements:
 
-Install Mongo by following the [official install instructions])(http://docs.mongodb.org/manual/installation/). Only needed if you need resource endpoints.
+Install Mongo by following the [official install instructions](http://docs.mongodb.org/manual/installation/). Only needed if you need resource endpoints.
 
 Install Node.js by using the big install button on the [http://nodejs.org/](http://nodejs.org/) homepage.
 
