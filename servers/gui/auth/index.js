@@ -12,12 +12,12 @@ var nodemailer = require('nodemailer');
 var Nipple = require('nipple');
 var Hawk = require('hawk');
 
-var db = new MongoDB('hapi-ninja', new Server('127.0.0.1', '27017', {auto_reconnect: true}), {w: 1});
+var db = new MongoDB('hapi-dash', new Server('127.0.0.1', '27017', {auto_reconnect: true}), {w: 1});
 db.open(function(e, d) {
     if (e) {
         console.log(e);
     } else{
-        console.log('connected to database :: hapi-ninja');
+        console.log('connected to database :: hapi-dash');
     }
 });
 

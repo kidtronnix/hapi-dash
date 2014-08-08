@@ -19,9 +19,6 @@ module.exports = {
         },
         app: {
             name: 'index'
-        },
-        auth: {
-            strategy: 'session'
         }
     },
     page: {
@@ -88,6 +85,9 @@ module.exports = {
         },
         app: {
             name: 'about'
+        },
+        auth: {
+            strategy: 'session'
         }
     },
     login: {
@@ -112,5 +112,6 @@ module.exports = {
                 redirectTo: false
             }
         }
+
     }
 }

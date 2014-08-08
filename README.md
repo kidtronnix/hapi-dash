@@ -11,7 +11,7 @@ Create a base boilerplate dashboard app showing how easy it is to get started wi
 [http://nodejs.org/](http://nodejs.org/)
 
 **Hapi** - A very well designed server framework that is easy to understand, easy to create your own plugins, scales very well, cache options built in, and more.
-[http://spumko.github.io/](http://spumko.github.io/)
+[http://hapijs.com/](http://hapijs.com/)
 
 **Swig** - It looks like HTML, it's very fast, great for template inheritance, and allows you to use HTML syntax with the server and with front-end client Javascript includes.
 [http://paularmstrong.github.io/swig/](http://paularmstrong.github.io/swig/docs/#browser)
@@ -22,7 +22,7 @@ Create a base boilerplate dashboard app showing how easy it is to get started wi
 
 **Mongo** - A great NoSQL database that handles JSON natively, perfect fit for Node.js projects. [http://www.mongodb.org/](http://www.mongodb.org/)
 
-*Socket.IO** - Enables real-time bidirectional event-based communication. It works on every platform, browser or device, focusing equally on reliability and speed.
+**Socket.IO** - Enables real-time bidirectional event-based communication. It works on every platform, browser or device, focusing equally on reliability and speed. [http://socket.io/](http://socket.io/)
 
 ### Requirements:
 
@@ -33,14 +33,14 @@ Install Node.js by using the big install button on the [http://nodejs.org/](http
 After Node.js is installed, clone this repo, change `cd` to this directory, and run `npm install`
 
 ```bash
-$ git clone https://github.com/smaxwellstewart/hapi-ninja.git
-$ cd hapi-ninja
+$ git clone https://github.com/smaxwellstewart/hapi-dash.git
+$ cd hapi-dash
 $ npm install
 ```
 
-Start the server by running the command:
+Start the servers by running the command:
 ```
-$ node server
+$ node start
 ```
 
 To see any changes you can manually just shutdown and restart the node server. This can be a pain so I use Supervisor to watch for file changes and restart the server [https://github.com/isaacs/node-supervisor](https://github.com/isaacs/node-supervisor).
@@ -52,7 +52,7 @@ $ npm install -g supervisor
 
 To use it run:
 ```
-$ supervisor -e html,js  server
+$ supervisor -e html,js  start
 ```
 Now all of your server html and js files are being watched and on change the node server gets restarted automatically.
 
@@ -80,9 +80,46 @@ If you need more, see the [Premium Version](http://gridgum.com/themes/dashgum-bo
 The Mongo-Crud module instantly adds the following functionality to any mongo db...
 
 * Plug 'n' play CRUD Routes
+* Access control
 * Set custom fields to hash and/or timestamp at doc creation, if required
 
-Check the readme for more info.
+Check the [readme](https://github.com/smaxwellstewart/hapi-dash/tree/master/lib/mongo-crud) for more info on how to add and configure CRUD routes.
+
+## Auth
+
+There is seperate authentication for the different servers in the app:
+
+###API
+
+The API uses [Hawk](https://github.com/hapijs/hapi-auth-hawk) authentication. There are two auth strategies pre-configured, 'core' and 'web'. Core is for core functionality, ie internal API endpoints. Core credentials are hardcoded and should be changed before deployment. Web is for web facing endpoints, ie for registered users. Core credentials will work for web routes.
+
+```javascript
+// EXAMPLE: add core or web auth to hapi route
+// Only allow core to use route (ie internal)
+var routeConfig = {
+    auth: 'core',
+    ...
+}
+
+// Only allow registered users to use route
+var routeConfig = {
+    auth: 'web',
+    ...
+}
+```
+
+###GUI
+
+The GUI uses [Cookie](https://github.com/hapijs/hapi-auth-cookie) authentication.
+
+```javascript
+// EXAMPLE: add core auth to hapi route
+// Only allow core to use route (ie internal)
+var routeConfig = {
+    auth: 'session',
+    ...
+}
+```
 
 ## Plugins
 The Hapi plugins that are being used.

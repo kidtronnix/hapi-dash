@@ -7,12 +7,12 @@ var apiIP = "127.0.0.1:3000";
 // 3. API SERVER
 var apiServer = new Hapi.Server('127.0.0.1', 3000)
 
-var db = new MongoDB('hapi-ninja', new Server('127.0.0.1', '27017', {auto_reconnect: true}), {w: 1});
+var db = new MongoDB('hapi-dash', new Server('127.0.0.1', '27017', {auto_reconnect: true}), {w: 1});
 db.open(function(e, d) {
     if (e) {
         console.log(e);
     } else{
-        console.log('connected to database :: hapi-ninja');
+        console.log('connected to database :: hapi-dash');
     }
 })
 
