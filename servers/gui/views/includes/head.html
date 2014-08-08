@@ -1,0 +1,12 @@
+{% block head %}
+	<script src="/socket.io/socket.io.js"></script>
+    {% for item in assets.css %}
+        <link rel="stylesheet" href="/{{item}}{{version.cache}}"/>
+    {% endfor %}
+    <script src="/js/chart-master/Chart.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+{% endblock %}

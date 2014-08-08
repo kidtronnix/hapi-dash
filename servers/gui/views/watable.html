@@ -1,0 +1,28 @@
+{% extends './layouts/default.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper site-min-height">
+          	<h3><i class="fa fa-angle-right"></i> Responsive Table</h3>
+               
+          	<!-- BASIC FORM ELELEMNTS -->
+          	<div class="row">
+          		<div class="col-lg-12">
+                  <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i>  waTable <small><a href="http://wootapa-watable.appspot.com/"> http://wootapa-watable.appspot.com/</a></small></h4>
+                      
+                      <hr>
+                      <div id="table-con" style="width:95%;margin:0 auto;"></div>
+                  </div>
+              </div>
+            </div>
+          </section>
+      </section>
+{% endblock %}
+{% block scripts %}{% autoescape false %}{{ scripts }}{% endautoescape %}{% endblock %}

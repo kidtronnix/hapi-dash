@@ -1,0 +1,59 @@
+{% extends './layouts/default.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper site-min-height">
+              <!-- page start-->
+              <div class="chat-room mt">
+                  <aside class="mid-side">
+                      <div class="chat-room-head">
+                          <h3>Chat Room</h3>
+
+                          <div class="pull-right position">
+                            <h4>Participants: <span class="noUsers"></span></h4>
+                          </div>
+                      </div>
+                      <div class="messages" style="min-height: 50px">
+                      </div>
+                      <div class="clearfix"></div>
+                      <footer>
+                          <div class="chat-txt">
+                              <input id="message" type="text" class="form-control" placeholder="Please enter a username and join..." disabled="disabled">
+                          </div>
+                          <div class="btn-group hidden-sm hidden-xs">
+                              <!-- <button type="button" class="btn btn-white"><i class="fa fa-meh-o"></i></button>
+                              <button type="button" class="btn btn-white"><i class=" fa fa-paperclip"></i></button> -->
+                          </div>
+                          <button class="btn btn-theme" id="sendMessage">Send</button>
+                      </footer>
+                  </aside>                  
+                  <aside class="right-side">
+                      <div class="user-head">
+                          <!-- <a href="##" class="chat-tools btn-theme"><i class="fa fa-cog"></i> </a>
+                          <a href="##" class="chat-tools btn-theme03"><i class="fa fa-key"></i> </a> -->
+                          <input id="username" type="text" class="form-control" placeholder="Your Name">
+                      </div>
+                      <div class="invite-row">
+                          <h4 class="pull-left">Members</h4>
+                          <a href="#" class="btn btn-theme04 pull-right" id="join">+ Join</a>
+                      </div>
+                      <ul class="chat-available-user">
+                        
+                      </ul>
+                  </aside>
+              </div>
+              <!-- page end-->			
+		</section><! --/wrapper -->
+      </section><!-- /MAIN CONTENT -->
+
+      <!--main content end-->
+
+    
+{% endblock %}
+{% block scripts %}{% autoescape false %}{{ scripts }}{% endautoescape %}{% endblock %}

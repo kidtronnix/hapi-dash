@@ -1,0 +1,78 @@
+#notifications {
+    font-size: 12pt;
+    font-family: Arial,sans-serif;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    width: 284px;
+    position: absolute;
+    top: 0;
+    right: 2.0em;
+}
+*html #notifications {
+    width /**/: 302px;
+    top: 0.05em;
+    right: 0.15em;
+}
+#notifications li {
+    margin: 0.5em;
+    color: #fff;
+    min-height: 3em;
+    position: relative;
+}
+*html #notifications li {
+    margin /**/: 0.45em 0;
+    height: 3em;
+}
+#notifications li * {
+    margin: 0;
+    padding: 0;
+}
+#notifications li .inner {
+    margin: 0;
+    padding: 1em;
+    background: #000;
+    width: 100%;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+/*= CSS hack for Opera Rounded Corners */
+@media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0) {
+    #notifications li .inner {
+        background: url(jquery.notify.svg);
+    }
+}
+*html #notifications li .inner {
+    padding: 0.6em;
+    margin: 7px 0 0 2px;
+}
+#notifications li .inner .title {
+    font-weight: bold;
+    font-size: 14pt;
+}
+#notifications li .inner .text {
+    font-size: 11pt;
+}
+#notifications .withicon .inner * {
+    margin-left: 68px;
+}
+#notifications li .inner .icon {
+    display: block;
+    width: 52px;
+    height: 52px;
+    position: absolute;
+    text-align: center;
+    top: 1em;
+    left: -52px;
+    overflow: hidden;
+}
+#notifications li .inner .icon img {
+    margin: 0;
+}
+#notifications .withicon .inner {
+    min-height /**/: 52px;
+}
+*html #notifications .withicon {
+    height /**/: 80px;
+}

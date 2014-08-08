@@ -1,0 +1,94 @@
+ <!--**********************************************************************************************************************************************************
+MAIN SIDEBAR MENU
+*********************************************************************************************************************************************************** -->
+<!--sidebar start-->
+<aside>
+    <div id="sidebar"  class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+        
+        	  <p class="centered"><a href="#"><img src="img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+        	  <h5 class="centered">Simon Maxwell-Stewart</h5>
+        	  	
+            <li class="mt">
+                <a class="{% if page === 'dashboard' %} active {% endif %}" href="/">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Dashboard</span>                    
+                </a>
+            </li>
+
+            <li class="sub-menu">
+                <a class="{% if (page === 'general') ||  (page === 'buttons') || (page === 'panels') %}active{% endif %}" href="javascript:;" >
+                    <i class="fa fa-desktop"></i>
+                    <span>UI Elements</span>
+                </a>
+                <ul class="sub">
+                    <li class="{% if page === 'general' %}active{% endif %}"><a  href="/general">General</a></li>
+                    <li class="{% if page === 'buttons' %}active{% endif %}"><a href="/buttons">Buttons</a></li>
+                    <li class="{% if page === 'panels' %}active{% endif %}"><a href="/panels">Panels</a></li>
+                </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a class="{% if (page === 'calendar') ||  (page === 'gallery') || (page === 'to-do') %} active {% endif %}" href="javascript:;" >
+                    <i class="fa fa-cogs"></i>
+                    <span>Components</span>
+                </a>
+                <ul class="sub">
+                    <li class="{% if page === 'calendar' %}active{% endif %}"><a  href="/calendar">Calendar</a></li>
+                    <li class="{% if page === 'gallery' %}active{% endif %}"><a  href="/gallery">Gallery</a></li>
+                    <li class="{% if page === 'to-do' %}active{% endif %}"><a  href="/to-do">Todo List</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a class="{% if page === 'blank' %}active{% endif %}" href="javascript:;" >
+                    <i class="fa fa-book"></i>
+                    <span>Extra Pages</span>
+                </a>
+                <ul class="sub">
+                    <li class="{% if page === 'blank' %}active{% endif %}"><a  href="/blank">Blank Page</a></li>
+                    <li><a  href="/login">Login</a></li>
+                    <li><a  href="/lock-screen">Lock Screen</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a class="{% if page === 'form-components' %}active{% endif %}" href="javascript:;" >
+                    <i class="fa fa-tasks"></i>
+                    <span>Forms</span>
+                </a>
+                <ul class="sub">
+                    <li class="{% if page === 'form-components' %}active{% endif %}"><a  href="/form-components">Form Components</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a class="{% if (page === 'basic-table') ||  (page === 'watable') %} active {% endif %}" href="javascript:;" >
+                    <i class="fa fa-th"></i>
+                    <span>Data Tables</span>
+                </a>
+                <ul class="sub">
+                    <li class="{% if page === 'basic-table' %}active{% endif %}"><a  href="/basic-table">Basic Table</a></li>
+                    <li class="{% if page === 'watable' %}active{% endif %}"><a  href="/watable">Responsive Table</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a class="{% if (page === 'morris') ||  (page === 'chartjs') %} active {% endif %}" href="javascript:;" >
+                    <i class=" fa fa-bar-chart-o"></i>
+                    <span>Charts</span>
+                </a>
+                <ul class="sub">
+                    <li class="{% if page === 'morris' %}active{% endif %}"><a  href="/morris">Morris</a></li>
+                    <li class="{% if page === 'chartjs' %}active{% endif %}"><a  href="/chartjs">Chartjs</a></li>
+                </ul>
+            </li>
+            <li class="">
+                <a class="{% if page === 'chat' %} active {% endif %}" href="/">
+                    <i class="fa fa-comments-o"></i>
+                    <span>Chat</span>                    
+                </a>
+            </li>
+
+        </ul>
+        <!-- sidebar menu end-->
+    </div>
+</aside>
+<!--sidebar end -->

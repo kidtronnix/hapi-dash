@@ -1,0 +1,26 @@
+{% extends './layouts/auth.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<form id="register" class="form-login" action="/register">
+    <h2 class="form-login-heading">register an account</h2>
+    <div class="login-wrap">
+        <input type="text" id="fname" class="form-control" placeholder="First Name">
+        <br>
+        <input type="text" id="lname" class="form-control" placeholder="Last Name">
+        <br>
+        <input type="text" id="email" class="form-control" placeholder="Email" autofocus>
+        <br>
+        <input type="password" id="password" class="form-control" placeholder="Password">
+        <br>
+        <input type="password" id="password2" class="form-control" placeholder="Re-type Password">
+        <br>
+        
+        <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> REGISTER</button>
+
+    </div>
+
+</form>
+    
+{% endblock %}

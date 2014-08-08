@@ -1,0 +1,14 @@
+{
+  "name": "Api",
+  "version": "0.0.0",
+  "description": "Media Scanner API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "s.maxwell-stewart@mobicow.com",
+  "license": "ISC",
+  "dependencies": {
+    "utf8": "^2.0.0"
+  }
+}

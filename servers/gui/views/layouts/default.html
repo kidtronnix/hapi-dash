@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    {% include "../includes/head.html" %}
+</head>
+<body>
+	<section id="container" >
+		{% include "../partials/topbar.html" %}
+		{% include "../partials/sidebar.html" %}
+		{% block content %}{% endblock %}
+		{% include "../partials/footer.html" %}
+	</section>
+	{% include "../includes/foot.html" %}
+	{% block scripts %}{% endblock %}
+</body>
+</html>

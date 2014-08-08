@@ -1,0 +1,21 @@
+{% extends './layouts/auth.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<form id="reset" class="form-login" action="index.html">
+    <h2 class="form-login-heading">reset password</h2>
+    <div class="login-wrap">
+        <input id="forgotToken" type="hidden" value="{{token}}">
+        <input id="email" type="text" class="form-control" placeholder="Email" autofocus>
+        <br>
+        <input id="password" type="password" class="form-control" placeholder="Password" autofocus>
+        <br>
+        <input id="password2" type="password" class="form-control" placeholder="Re-type Password" autofocus>
+        <br> 
+        <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> RESET</button>
+    </div>
+
+</form>
+    
+{% endblock %}
