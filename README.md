@@ -52,7 +52,7 @@ $ npm install -g supervisor
 
 To use it run:
 ```
-$ supervisor -e html,js  start
+$ supervisor -e html,js  start.js
 ```
 Now all of your server html and js files are being watched and on change the node server gets restarted automatically.
 
@@ -87,14 +87,14 @@ Check the [readme](https://github.com/smaxwellstewart/hapi-dash/tree/master/lib/
 
 ## Auth
 
-There is seperate authentication for the different servers in the app:
+There is seperate authentication for the different servers in the app. Once a user registers they will be created with a random API token. This is used to access the API.
 
 ###API
 
 The API uses [Hawk](https://github.com/hapijs/hapi-auth-hawk) authentication. There are two auth strategies pre-configured, 'core' and 'web'. Core is for core functionality, ie internal API endpoints. Core credentials are hardcoded and should be changed before deployment. Web is for web facing endpoints, ie for registered users. Core credentials will work for web routes.
 
 ```javascript
-// EXAMPLE: add core or web auth to hapi route
+// EXAMPLE
 // Only allow core to use route (ie internal)
 var routeConfig = {
     auth: 'core',
@@ -113,8 +113,8 @@ var routeConfig = {
 The GUI uses [Cookie](https://github.com/hapijs/hapi-auth-cookie) authentication.
 
 ```javascript
-// EXAMPLE: add core auth to hapi route
-// Only allow core to use route (ie internal)
+// EXAMPLE: add session auth to hapi route
+// Only allow registered users to use route
 var routeConfig = {
     auth: 'session',
     ...

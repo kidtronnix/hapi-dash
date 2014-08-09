@@ -376,13 +376,14 @@ exports.register = function(plugin, options, next) {
                     callback: function(err, res, payload) {
                         if (err) throw err; 
                         
-                        return reply.redirect('/login');
+                        return reply.redirect('/login/activated');
                     }
                 });
             }
         });
     }
 
+    // Handles login attempt
     plugin.route({
         method: 'POST',
         path: '/login',
@@ -400,6 +401,7 @@ exports.register = function(plugin, options, next) {
         }
     })
 
+    // Logs out user
     plugin.route({
         method: 'GET',
         path: '/logout',
@@ -409,6 +411,8 @@ exports.register = function(plugin, options, next) {
         }
     })
 
+
+    // Handles new user activation
     plugin.route({
         method: 'GET',
         path: '/activate/{token}',
@@ -417,26 +421,39 @@ exports.register = function(plugin, options, next) {
         }
     })
 
-    // This is the routes for the plugin
+    // Handles forgot password
     plugin.route({
         path: "/forgot",
         method: "POST",
         config: forgot()
     });
 
-    // This is the routes for the plugin
+    // Handles reset attempt
     plugin.route({
         path: "/reset",
         method: "POST",
         config: resetPass()
     });
 
-    // This is the routes for the plugin
+    // Handles registration attempt
     plugin.route({
         path: "/register",
         method: "POST",
         config: register()
     });
+
+    // FRONTEND FORM ROUTES
+    plugin.route({
+        method: 'GET',
+        path: '/register',
+        config: {
+            handler: function (request, reply) {
+                return reply.view('register', {
+                    title: 'Hapi Dash - Register'
+                });
+            }
+        }
+    })
 
     plugin.route({
         path: "/reset/{token}",
@@ -444,12 +461,48 @@ exports.register = function(plugin, options, next) {
         config: {
             handler: function(request, reply) {
                 return reply.view('reset', {
-                    title: 'Hapi Dash - Boiler Plate App',
+                    title: 'Hapi Dash - Reset Password',
                     token: request.params.token
                 });
             }
         }
     });
+
+    plugin.route({
+        path: "/login/{activated?}",
+        method: "GET",
+        config: {
+            handler: function(request, reply){
+                if (request.auth.isAuthenticated) {
+                    return reply.redirect('/');
+                }
+                var scripts = '';
+
+                if (request.params.activated) {
+                    scripts += '<script>$( document ).ready(function() { $.notify("Activated account!", "success");})</script>'
+                }
+
+                reply.view('login', {
+                    title: 'Login',
+                    scripts: scripts
+                });
+            },
+            app: {
+                name: 'login'
+            },
+            auth: {
+                mode: 'try',
+                strategy: 'session'
+            },
+            plugins: {
+                'hapi-auth-cookie': {
+                    redirectTo: false
+                }
+            }
+        }
+    });
+
+
 
     next();
 }

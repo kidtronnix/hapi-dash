@@ -16,11 +16,6 @@ module.exports = function(server) {
         },
         {
             method: 'GET',
-            path: '/login',
-            config: controller.base.login
-        },
-        {
-            method: 'GET',
             path: '/{path*}',
             config: controller.base.page
         },

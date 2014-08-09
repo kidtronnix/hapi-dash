@@ -80,7 +80,9 @@ $('form#reset').submit(function (e) {
     console.log(result);
     if(!result.error) {
       $.notify('Password reset successfully. Redirecting to login...', 'success');
-      // window.location.href = '/login';
+      setTimeout(function(){
+        window.location.href = '/login';
+      }, 3000)
     } else {
       $.notify(result.details, 'error');
     }

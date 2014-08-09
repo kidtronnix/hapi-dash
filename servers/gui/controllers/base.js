@@ -7,9 +7,9 @@ module.exports = {
             var scripts = "";
             var page = 'dashboard';
 
-             var markdown = fs.readFileSync(__dirname+'/../../../README.md', {encoding: 'utf8'});
-             console.log(markdown)
-          // Render the view with the custom greeting
+            var markdown = fs.readFileSync(__dirname+'/../../../README.md', {encoding: 'utf8'});
+            
+            // Render the view with the custom greeting
             reply.view('index', {
                 title: 'Hapi Dash - Boiler Plate App',
                 scripts: scripts,
@@ -19,6 +19,9 @@ module.exports = {
         },
         app: {
             name: 'index'
+        },
+        auth: {
+            strategy: 'session'
         }
     },
     page: {
@@ -89,29 +92,5 @@ module.exports = {
         auth: {
             strategy: 'session'
         }
-    },
-    login: {
-        handler: function(request, reply){
-            if (request.auth.isAuthenticated) {
-                return reply.redirect('/');
-            }
-
-            reply.view('login', {
-                title: 'Login'
-            });
-        },
-        app: {
-            name: 'login'
-        },
-        auth: {
-            mode: 'try',
-            strategy: 'session'
-        },
-        plugins: {
-            'hapi-auth-cookie': {
-                redirectTo: false
-            }
-        }
-
     }
 }
