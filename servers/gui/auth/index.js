@@ -136,8 +136,8 @@ exports.register = function(plugin, options, next) {
                                             from: "Hapi Dash <hapi.dashboard@gmail.com>", // sender address
                                             to: user.email, // list of receivers
                                             subject: "Reset Password", // Subject line
-                                            text: "Hi,\nHere is your password reset link:\n\n"+link+"\n\nThis token will expire in 1 hour.\n\nThe Team", // plaintext body
-                                            html: "<p>Hi,</br>Here is you password reset link:</p><p><a href='"+link+"'>"+link+"</a></p><p>This token will expire in 1 hour.</p><p>The Team</p>" // html body
+                                            text: "Hi "+user.fname+",\nHere is your password reset link:\n\n"+link+"\n\nThis token will expire in 1 hour.\n\nThe Team", // plaintext body
+                                            html: "<p>Hi "+user.fname+",</br>Click the link below to reset your password:</p><a href='"+link+"'><h3>Reset Password</h3></a><p>This token will expire in 1 hour.</p><p>The Team</p>" // html body
                                         }
 
                                         // send mail with defined transport object
@@ -225,8 +225,8 @@ exports.register = function(plugin, options, next) {
                                         from: "Hapi Dash <hapi.dashboard@gmail.com>", // sender address
                                         to: response.email, // list of receivers
                                         subject: "Activate your Account", // Subject line
-                                        text: "Hi,\nThank you for registering. Please click the following link to activate your account:\n\n"+link+"\n\nThanks for your cooperation.\n\nThe Team", // plaintext body
-                                        html: "<p>Hi,</br>Thank you for registering. Please click the following link to activate your account:</p><p><a href='"+link+"'>"+link+"</a></p><p>Thanks for your cooperation.</p><p>The Team</p>" // html body
+                                        text: "Hi "+response.fname+",\nThank you for registering. Use the following link to activate your account:\n\n"+link+"\n\nThanks for your cooperation.\n\nThe Team", // plaintext body
+                                        html: "<p>Hi "+response.fname+",</br>Thank you for registering. Please click the following link to activate your account:</p><a href='"+link+"'><h3>Activate account</h3></a><p>Thanks for your cooperation.</p><p>The Team</p>" // html body
                                     }
 
                                     // send mail with defined transport object
@@ -483,7 +483,7 @@ exports.register = function(plugin, options, next) {
                 }
 
                 reply.view('login', {
-                    title: 'Login',
+                    title: 'Hapi Dash - Login',
                     scripts: scripts
                 });
             },

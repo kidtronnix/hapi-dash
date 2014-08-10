@@ -11,7 +11,7 @@ module.exports = {
             
             // Render the view with the custom greeting
             reply.view('index', {
-                title: 'Hapi Dash - Boiler Plate App',
+                title: 'Hapi Dash - Boiler Plate Dashboard',
                 scripts: scripts,
                 page: page,
                 text: marked(markdown)
@@ -76,7 +76,7 @@ module.exports = {
         
             if(fs.existsSync(__dirname +'/../views/'+page+'.html')) {
                 reply.view(page, {
-                    title: 'Hapi Dash - Boiler Plate App',
+                    title: 'Hapi Dash - Boiler Plate Dashboard',
                     scripts: scripts,
                     page: page
                 });
