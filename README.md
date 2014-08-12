@@ -59,7 +59,7 @@ $ node start.js
 
 This will produce the following output:
 
-INSERT IMAGE
+![startup output](https://raw.githubusercontent.com/smaxwellstewart/hapi-dash/master/public/img/process_start.png)
 
 Alternatively you can use `supervisor` to watch for file changes and restart the server, [https://github.com/isaacs/node-supervisor](https://github.com/isaacs/node-supervisor). It is not as pwerful and not recommened. 
 
