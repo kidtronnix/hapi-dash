@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 	var TYPING_TIMER_LENGTH = 400;
 
-	var socket = io.connect('http://localhost:3020');
+	var socket = io.connect('http://hapi-dash.smaxwellstewart.com');
 	// Initialize varibles
 	var $window = $(window);
 	var $usernameInput = $('input#username'); // Input for username
