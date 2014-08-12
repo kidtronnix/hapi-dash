@@ -130,7 +130,7 @@ exports.register = function(plugin, options, next) {
                                     callback: function (err, res, payload) {
                                         
                                         // Update user to be 
-                                        var link = "http://localhost:3020/reset/"+token;
+                                        var link = "http://hapi-dash.smaxwellstewart.com/reset/"+token;
 
                                         // setup e-mail data with unicode symbols
                                         var mailOptions = {
@@ -220,7 +220,7 @@ exports.register = function(plugin, options, next) {
                                     return next({error: true, details: 'Error registering.'}).type('application/json');
                                 } else {
                                     var token = Jwt.sign({id:response._id}, forgotSecret);
-                                    var link = "http://localhost:3020/activate/"+token;
+                                    var link = "http://hapi-dash.smaxwellstewart.com/activate/"+token;
                                     // setup e-mail data with unicode symbols
                                     var mailOptions = {
                                         from: "Hapi Dash <hapi.dashboard@gmail.com>", // sender address
