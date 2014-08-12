@@ -11,6 +11,7 @@ var Jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer');
 var Nipple = require('nipple');
 var Hawk = require('hawk');
+var apiIP = '127.0.0.1:3030';
 
 var db = new MongoDB('hapi-dash', new Server('127.0.0.1', '27017', {auto_reconnect: true}), {w: 1});
 db.open(function(e, d) {
@@ -40,11 +41,11 @@ var coreCreds = {
     algorithm: 'sha256'
 }
 
-var apiIP = '127.0.0.1:3000';
+
 
 var API = {
     call: function(opts) {
-        var url = 'http://0.0.0.0:3000'+opts.url;
+        var url = 'http://'+apiIP+opts.url;
         var requestOptions = {                   
             headers: { 'content-type':'application/json'}
         };
