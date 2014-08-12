@@ -37,22 +37,35 @@ $ git clone https://github.com/smaxwellstewart/hapi-dash.git
 $ cd hapi-dash
 $ npm install
 ```
+#### Starting
 
-Start the servers by running the command:
-```
-$ node start
-```
-
-To see any changes you can manually just shutdown and restart the node server. This can be a pain so I use Supervisor to watch for file changes and restart the server [https://github.com/isaacs/node-supervisor](https://github.com/isaacs/node-supervisor).
+The recommended way to sart the servers is using `pm2`, [https://github.com/Unitech/pm2](https://github.com/Unitech/pm2). It is a node process mananger that will take care of running your process like services. It is very powerful and straight foward to use.
 
 To install run:
+```bash
+$ npm install -g pm2
 ```
+
+Once this is installed we can start both the API and GUI using the start script `start.js`:
+```bash
+$ node start.js
+```
+
+This will produce the following output:
+
+INSERT IMAGE
+
+Alternatively you can use `supervisor` to watch for file changes and restart the server, [https://github.com/isaacs/node-supervisor](https://github.com/isaacs/node-supervisor). It is not as pwerful and not recommened. 
+
+To install run:
+```bash
 $ npm install -g supervisor
 ```
 
-To use it run:
-```
-$ supervisor -e html,js  start.js
+To start the servers:
+```bash
+$ supervisor -e html,js  servers/api/server.js
+$ supervisor -e html,js  servers/gui/server.js
 ```
 Now all of your server html and js files are being watched and on change the node server gets restarted automatically.
 
@@ -65,6 +78,8 @@ npm install -g gulp
 ```
 
 Now you can run `gulp` from the command line and it will run the tasks in the `gulpfile.js`. The current tasks will minify and optimize your CSS, JS, and Images. If you want more tasks you can go to the Gulp Plugin page. [http://gratimax.github.io/search-gulp-plugins/](http://gratimax.github.io/search-gulp-plugins/)
+
+The other thing is to configure pm2 to start the desired number of process for load balancing, based on expected usage/traffic of API and GUI individually, plus no. cores on machine. For usage of pm2 see,.
 
 ## Dashboard
 The dashboard uses the free [Dashgum](http://www.blacktie.co/2014/07/dashgum-free-dashboard/) responsive theme, design by [Carlos Alvarez](http://alvarez.is/). Framework used: Bootstrap 3.2
@@ -137,6 +152,8 @@ Client/browser reloads new assets based on package.json version of your applicat
 There are two main folders in the stack. The "**public**" folder for front-end (client side) code, and "**servers**" folder for server side code.
 
 By having the front-end folder and server side folder be specific, it provides for better consistency when changing projects. This way when you change from a full front-end app (Phonegap), to a front-end and server side app you get to keep the same folder structure. Allowing for better consistency with your stack, projects, and tools.
+
+The server folder is split into two folders. `api` and 'gui'. The api folder contains API plugins (Endpoints), each contained in an individual foldder. The gui folder contains a more MVC approach, with auth and socket.io plugins.
 
 
 ## Contributers

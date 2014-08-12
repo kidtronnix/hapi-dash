@@ -78,8 +78,8 @@ var getCredentials = function (id, callback) {
 
 var goodOptions = {
     subscribers: {
-        console: ['ops', 'request', 'log', 'error'],
-        'tmp/logs/': ['ops', 'request', 'log', 'error']
+        console: ['ops', 'request', 'log', 'error']
+        // 'tmp/logs/': ['ops', 'request', 'log', 'error']
     }
 };
 
@@ -103,9 +103,11 @@ apiServer.pack.register([
 apiServer.pack.register([
     
     {
-    	name: 'core-user',
-        plugin: require('./core/User'),
-        options: {}
+    	name: 'user',
+        plugin: require('./User'),
+        options: {
+            db: db
+        }
     }
 ], function(err) {
 	if (err) throw err;

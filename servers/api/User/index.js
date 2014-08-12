@@ -49,9 +49,14 @@ var internals = {
     }
 };
 
-// Require MongoCrud functions
-var MongoCrud = require(__dirname+'/../../../../lib/mongo-crud')(internals.CRUD);
+
 exports.register = function(plugin, options, next) {
+
+    // Add db to our config
+    internals.CRUD.db = options.db;
+
+    // Require MongoCrud functions
+    var MongoCrud = require(__dirname+'/../../../lib/mongo-crud')(internals.CRUD);
 
     var apiGenKey = function(request, next) {
         var generate = function(length) {
