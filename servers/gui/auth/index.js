@@ -227,7 +227,7 @@ exports.register = function(plugin, options, next) {
                                         to: response.email, // list of receivers
                                         subject: "Activate your Account", // Subject line
                                         text: "Hi "+response.fname+",\nThank you for registering. Use the following link to activate your account:\n\n"+link+"\n\nThanks for your cooperation.\n\nThe Team", // plaintext body
-                                        html: "<p>Hi "+response.fname+",</br>Thank you for registering. Please click the following link to activate your account:</p><a href='"+link+"'><h3>Activate account</h3></a><p>Thanks for your cooperation.</p><p>The Team</p>" // html body
+                                        html: "<p>Hi "+response.fname+",</p><p>Thank you for registering. Please click the following link to activate your account:</p><a href='"+link+"'><h3>Activate account</h3></a><p>Thanks for your cooperation.</p><p>The Team</p>" // html body
                                     }
 
                                     // send mail with defined transport object
