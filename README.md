@@ -4,7 +4,7 @@ Hapi Dash
 Boilerplate Hapi Web and API Server Example, with frontend dashboard. Based on the fantastic [Hapi Ninja](https://github.com/poeticninja/hapi-ninja) project.
 
 ## The Goal:
-Create a base boilerplate dashboard app showing how easy it is to get started with Hapi as a web server. Quick development of RESTful Resource api endpoints, out the box auth for both API and GUI, and realtime messaging.
+Create a base boilerplate dashboard app, with seperate GUI and API server processes. Quick development of RESTful Resource api endpoints, out the box auth for both API and GUI, and realtime frontend communication.
 
 ## The Stack:
 **Node.js** - Because it's fast, easy to get started, and Javscript is awesome.
@@ -13,20 +13,26 @@ Create a base boilerplate dashboard app showing how easy it is to get started wi
 **Hapi** - A very well designed server framework that is easy to understand, easy to create your own plugins, scales very well, cache options built in, and more.
 [http://hapijs.com/](http://hapijs.com/)
 
+**pm2** - A brilliant node process manager. Makes starting, stopping and restarting process if file changes occur, very simple. Can be used to restart your app on machine reboot/crash as well, similar to running processes as a linux service.
+[https://github.com/Unitech/pm2](https://github.com/Unitech/pm2)
+
+**Mongo** - A great NoSQL database that handles JSON natively, perfect fit for Node.js projects.
+[http://www.mongodb.org/](http://www.mongodb.org/)
+
 **Swig** - It looks like HTML, it's very fast, great for template inheritance, and allows you to use HTML syntax with the server and with front-end client Javascript includes.
 [http://paularmstrong.github.io/swig/](http://paularmstrong.github.io/swig/docs/#browser)
 
+**Socket.IO** - Enables real-time bidirectional event-based communication. It works on every platform, browser or device, focusing equally on reliability and speed. [http://socket.io/](http://socket.io/)
+
+**Gulp** - A task runner for your assets, and can do a lot more. The performance is amazing and it is easy to get started.
+[http://gulpjs.com/](http://gulpjs.com/)
+
 **CSS Framework** - None. Choose your own CSS preprocessor and CSS framework.
 
-**Gulp** - A task runner for your assets, and can do a lot more. The performance is amazing and it is easy to get started. [http://gulpjs.com/](http://gulpjs.com/)
-
-**Mongo** - A great NoSQL database that handles JSON natively, perfect fit for Node.js projects. [http://www.mongodb.org/](http://www.mongodb.org/)
-
-**Socket.IO** - Enables real-time bidirectional event-based communication. It works on every platform, browser or device, focusing equally on reliability and speed. [http://socket.io/](http://socket.io/)
 
 ### Requirements:
 
-Install Mongo by following the [official install instructions](http://docs.mongodb.org/manual/installation/). Only needed if you need resource endpoints.
+Install Mongo by following the [official install instructions](http://docs.mongodb.org/manual/installation/). Only required if you need a db (e.g. RESTful resource endpoints).
 
 Install Node.js by using the big install button on the [http://nodejs.org/](http://nodejs.org/) homepage.
 
@@ -39,7 +45,7 @@ $ npm install
 ```
 #### Starting
 
-The recommended way to sart the servers is using `pm2`, [https://github.com/Unitech/pm2](https://github.com/Unitech/pm2). It is a node process mananger that will take care of running your process like services. It is very powerful and straight foward to use.
+The recommended way to sart the servers is using `pm2`. It is a node process mananger that will take care of running your process like services. It is very powerful and straight foward to use.
 
 To install run:
 ```bash
