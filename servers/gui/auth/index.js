@@ -3,85 +3,56 @@
  */
 
 var Joi = require('joi');
-var MongoDB = require('mongodb').Db;
-var Server = require('mongodb').Server;
-var ObjectId = require('mongodb').ObjectID;
 var Bcrypt = require('bcrypt-nodejs');
 var Jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer');
 var Nipple = require('nipple');
 var Hawk = require('hawk');
 
-var db = new MongoDB('hapi-dash', new Server('127.0.0.1', '27017', {auto_reconnect: true}), {w: 1});
-db.open(function(e, d) {
-    if (e) {
-        console.log(e);
-    } else{
-        console.log('connected to database :: hapi-dash');
-    }
-});
 
 var jwtSecret = 'MY super secure server side secret';
 var forgotSecret = 'MY super secure different server side secret';
 
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'hapi.dashboard@gmail.com',
-        pass: 'hapihapijoijoi'
-    }
-});
 
-
-
-var coreCreds = {
-    id: "core",
-    key: 'ya3ESSappr5etWCkvpbgST09NHozozs4',
-    algorithm: 'sha256'
-}
-
-var apiIP = '127.0.0.1:3000';
-
-var API = {
-    call: function(opts) {
-        var url = 'http://0.0.0.0:3000'+opts.url;
-        var requestOptions = {                   
-            headers: { 'content-type':'application/json'}
-        };
-
-        // Add payload
-        if(opts.payload) {
-            requestOptions.payload = JSON.stringify(opts.payload);
-        }
-        // Add auth
-        var header = Hawk.client.header(url, opts.method, { credentials: opts.credentials });
-        requestOptions.headers.Authorization = header.field;
-        
-        // Make call
-        if(opts.method === 'POST')
-        {
-            Nipple.post(url, requestOptions, opts.callback)
-        }
-        else if(opts.method === 'PUT')
-        {
-            Nipple.put(url, requestOptions, opts.callback)
-        }
-        else
-        {
-            Nipple.get(url, requestOptions, opts.callback)
-        }
-    }
-};
-
-var users = {
-    john: {
-        id: 'john',
-        password: 'password',
-        name: 'John Doe'
-    }
-};
 
 exports.register = function(plugin, options, next) {
+
+    // Setup things from config
+    var transporter = nodemailer.createTransport(options.email);
+
+    var API = {
+        call: function(opts) {
+            var url = 'http://'+options.apiIP+opts.url;
+            var requestOptions = {                   
+                headers: { 'content-type':'application/json'}
+            };
+
+            // Add payload
+            if(opts.payload) {
+                requestOptions.payload = JSON.stringify(opts.payload);
+            }
+            // Add auth
+            var header = Hawk.client.header(url, opts.method, { credentials: opts.credentials });
+            requestOptions.headers.Authorization = header.field;
+            
+            // Make call
+            if(opts.method === 'POST')
+            {
+                Nipple.post(url, requestOptions, opts.callback)
+            }
+            else if(opts.method === 'PUT')
+            {
+                Nipple.put(url, requestOptions, opts.callback)
+            }
+            else
+            {
+                Nipple.get(url, requestOptions, opts.callback)
+            }
+        }
+    };
+
+    // Get DB connection from plugin options
+    var db = options.db;
 
     var forgot = function (plugin, next) {
 
@@ -125,7 +96,7 @@ exports.register = function(plugin, options, next) {
                                     payload: {
                                         forgotToken: token
                                     },
-                                    credentials: coreCreds,
+                                    credentials: config.coreCreds,
                                     callback: function (err, res, payload) {
                                         
                                         // Update user to be 
@@ -209,7 +180,7 @@ exports.register = function(plugin, options, next) {
                             method: 'POST',
                             url: '/api/user',
                             payload: newUser,
-                            credentials: coreCreds,
+                            credentials: config.coreCreds,
                             callback: function(err, res, payload) {
                                 if (err) throw err;
 
@@ -296,7 +267,7 @@ exports.register = function(plugin, options, next) {
                                             method: 'PUT',
                                             url: '/api/user/'+user._id,
                                             payload: payload,
-                                            credentials: coreCreds,
+                                            credentials: config.coreCreds,
                                             callback: function(err, res, payload) {
                                                 if (err) throw err; 
                                                 next({error: false, details: 'Changed Password'});
@@ -372,7 +343,7 @@ exports.register = function(plugin, options, next) {
                     method: 'PUT',
                     url: '/api/user/'+decoded.id,
                     payload: {activated: true},
-                    credentials: coreCreds,
+                    credentials: config.coreCreds,
                     callback: function(err, res, payload) {
                         if (err) throw err; 
                         

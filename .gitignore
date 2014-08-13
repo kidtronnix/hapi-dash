@@ -10,4 +10,6 @@ lib-cov
 pids
 results
 npm-debug.log
+config.js
+config.old.js
 node_modules

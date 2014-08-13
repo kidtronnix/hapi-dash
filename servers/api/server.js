@@ -4,28 +4,25 @@ var Server = require('mongodb').Server;
 var ObjectId = require('mongodb').ObjectID;
 var apiIP = "127.0.0.1:3000";
 
-// 3. API SERVER
-var apiServer = new Hapi.Server('127.0.0.1', 3000)
+var config = require('../../config');
 
-var db = new MongoDB('hapi-dash', new Server('127.0.0.1', '27017', {auto_reconnect: true}), {w: 1});
+// API SERVER
+var apiServer = new Hapi.Server(config.api.host, config.api.port)
+
+var db = new MongoDB(config.db.name, new Server(config.db.host, config.db.port, {auto_reconnect: true}), {w: 1});
 db.open(function(e, d) {
     if (e) {
         console.log(e);
     } else{
-        console.log('connected to database :: hapi-dash');
+        console.log('connected to database :: '+config.db.name);
     }
 })
 
 // CORE AUTHENTICATION LOOKUP
 var getCoreCredentials = function (id, callback) {
     // Core creds
-    var credentials = {
-        core: {
-            key: 'ya3ESSappr5etWCkvpbgST09NHozozs4',
-            access: 'admin',
-            algorithm: 'sha256'
-        }
-    }
+    var credentials = config.coreCreds;
+
     // Just return with core creds if supplied
     if(credentials[id] !== undefined) {
     	console.log('Core auth lookup: '+id+ ' >> authenticated');
@@ -41,13 +38,8 @@ var getCoreCredentials = function (id, callback) {
 var getCredentials = function (id, callback) {
 	
     // Core creds
-    var credentials = {
-        core: {
-            key: 'ya3ESSappr5etWCkvpbgST09NHozozs4',
-            access: 'admin',
-            algorithm: 'sha256'
-        }
-    }
+    var credentials = config.coreCreds;
+
     // Just return with core creds if supplied
     if(credentials[id] !== undefined) {
     	console.log('Web auth lookup: '+id+ ' >> authenticated as admin');
@@ -100,13 +92,12 @@ apiServer.pack.register([
 });
 
 // Endpoints
-apiServer.pack.register([
-    
+apiServer.pack.register([   
     {
     	name: 'user',
         plugin: require('./User'),
         options: {
-            db: db
+            db: db // passes the db connection to the plugin
         }
     }
 ], function(err) {
