@@ -9,8 +9,15 @@ var exec = require('child_process').exec;
 // 2. start processes
 // 3. 
 
-var stopApi =  exec('pm2 delete dash-api');
-var stopGui = exec('pm2 delete dash-gui');
+
+
+
+var stopApi =  exec('pm2 delete dash-api', function(err, stdout, stderr) {
+	// if (err) return console.log(err)
+});
+var stopGui = exec('pm2 delete dash-gui', function(err, stdout, stderr) {
+	// if (err) return console.log(err)
+});
 var stoppedApi = false;
 var stoppedGui = false;
 
@@ -32,8 +39,16 @@ stopGui.on('close', function (data) {
 
 // Start up function
 var start = function() {
-	var startApi = exec('pm2 start servers/gui/server.js --watch --name dash-gui -e tmp/logs/gui-err.log -o tmp/logs/gui.log -f');
-	var startGui = exec('pm2 start servers/api/server.js --watch --name dash-api -e tmp/logs/api-err.log -o tmp/logs/api.log -f');
+	var startApi = exec('pm2 start servers/gui/server.js --watch --name dash-gui -e tmp/logs/gui-err.log -o tmp/logs/gui.log -f',
+		function(err, stdout, stderr) {
+			if (err) return console.log(err)
+		}
+	);
+	var startGui = exec('pm2 start servers/api/server.js --watch --name dash-api -e tmp/logs/api-err.log -o tmp/logs/api.log -f',
+		function(err, stdout, stderr) {
+			if (err) return console.log(err)
+		}
+	);
 	var startedApi = false;
 	var startedGui = false;
 
@@ -55,7 +70,9 @@ var start = function() {
 
 // Display all our processes
 var list = function() {
-	var processes = exec('pm2 list');
+	var processes = exec('pm2 list', function(err, stdout, stderr) {
+		if (err) return console.log(err)
+	});
 
 	processes.stdout.on('data', function (data) {
 		console.log(data);
