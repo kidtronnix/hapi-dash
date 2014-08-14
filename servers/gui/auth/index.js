@@ -103,11 +103,8 @@ exports.register = function(plugin, options, next) {
                                     callback: function (err, res, payload) {
                                         
                                         // Update user to be 
-<<<<<<< HEAD
-                                        var link = "http://hapi-dash.smaxwellstewart.com/reset/"+token;
-=======
+
                                         var link = options.app.url+"/reset/"+token;
->>>>>>> master
 
                                         // setup e-mail data with unicode symbols
                                         var mailOptions = {
