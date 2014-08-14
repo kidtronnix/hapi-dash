@@ -6,6 +6,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 var config = require('../../config');
 
+
 // API SERVER
 var apiServer = new Hapi.Server(config.api.host, config.api.port)
 
@@ -21,11 +22,16 @@ db.open(function(e, d) {
 // CORE AUTHENTICATION LOOKUP
 var getCoreCredentials = function (id, callback) {
     // Core creds
-    var credentials = config.coreCreds;
+    var credentials = {};
+    credentials[config.coreCreds.id] = {
+        key: config.coreCreds.key,
+        access: 'admin',
+        algorithm: 'sha256'
+    }
 
     // Just return with core creds if supplied
     if(credentials[id] !== undefined) {
-    	console.log('Core auth lookup: '+id+ ' >> authenticated');
+    	console.log('Core auth lookup: '+id+ ' >> valid');
     	return callback(null, credentials[id]);
     } else {
     	console.log('Core auth lookup: '+id+ ' >> invalid');
@@ -42,7 +48,7 @@ var getCredentials = function (id, callback) {
 
     // Just return with core creds if supplied
     if(credentials[id] !== undefined) {
-    	console.log('Web auth lookup: '+id+ ' >> authenticated as admin');
+    	console.log('Web auth lookup: '+id+ ' >> valid as core');
     	return callback(null, credentials[id]);
     } else {
 
@@ -53,7 +59,7 @@ var getCredentials = function (id, callback) {
 
                 var credentials = null;
                 if(user) {
-                	console.log('Web auth lookup: '+id+ ' >> authenticated as '+user.access);
+                	console.log('Web auth lookup: '+id+ ' >> valid as '+user.access);
                     credentials = {
 		                key: user.apiToken,
 		                access: user.access,

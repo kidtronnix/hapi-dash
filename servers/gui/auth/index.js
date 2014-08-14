@@ -55,6 +55,8 @@ exports.register = function(plugin, options, next) {
     // Get DB connection from plugin options
     var db = options.db;
 
+    var from = options.app.name + " <"+options.email.auth.user+">";
+
     var forgot = function (plugin, next) {
 
         return {
@@ -97,15 +99,19 @@ exports.register = function(plugin, options, next) {
                                     payload: {
                                         forgotToken: token
                                     },
-                                    credentials: config.coreCreds,
+                                    credentials: options.coreCreds,
                                     callback: function (err, res, payload) {
                                         
                                         // Update user to be 
+<<<<<<< HEAD
                                         var link = "http://hapi-dash.smaxwellstewart.com/reset/"+token;
+=======
+                                        var link = options.app.url+"/reset/"+token;
+>>>>>>> master
 
                                         // setup e-mail data with unicode symbols
                                         var mailOptions = {
-                                            from: "Hapi Dash <hapi.dashboard@gmail.com>", // sender address
+                                            from: from, // sender address
                                             to: user.email, // list of receivers
                                             subject: "Reset Password", // Subject line
                                             text: "Hi "+user.fname+",\nHere is your password reset link:\n\n"+link+"\n\nThis token will expire in 1 hour.\n\nThe Team", // plaintext body
@@ -181,7 +187,7 @@ exports.register = function(plugin, options, next) {
                             method: 'POST',
                             url: '/api/user',
                             payload: newUser,
-                            credentials: config.coreCreds,
+                            credentials: options.coreCreds,
                             callback: function(err, res, payload) {
                                 if (err) throw err;
 
@@ -191,10 +197,12 @@ exports.register = function(plugin, options, next) {
                                     return next({error: true, details: 'Error registering.'}).type('application/json');
                                 } else {
                                     var token = Jwt.sign({id:response._id}, forgotSecret);
-                                    var link = "http://hapi-dash.smaxwellstewart.com/activate/"+token;
+
+                                    var link = options.app.url+"/activate/"+token;
+
                                     // setup e-mail data with unicode symbols
                                     var mailOptions = {
-                                        from: "Hapi Dash <hapi.dashboard@gmail.com>", // sender address
+                                        from: from, // sender address
                                         to: response.email, // list of receivers
                                         subject: "Activate your Account", // Subject line
                                         text: "Hi "+response.fname+",\nThank you for registering. Use the following link to activate your account:\n\n"+link+"\n\nThanks for your cooperation.\n\nThe Team", // plaintext body
@@ -268,7 +276,7 @@ exports.register = function(plugin, options, next) {
                                             method: 'PUT',
                                             url: '/api/user/'+user._id,
                                             payload: payload,
-                                            credentials: config.coreCreds,
+                                            credentials: options.coreCreds,
                                             callback: function(err, res, payload) {
                                                 if (err) throw err; 
                                                 next({error: false, details: 'Changed Password'});
@@ -344,7 +352,7 @@ exports.register = function(plugin, options, next) {
                     method: 'PUT',
                     url: '/api/user/'+decoded.id,
                     payload: {activated: true},
-                    credentials: config.coreCreds,
+                    credentials: options.coreCreds,
                     callback: function(err, res, payload) {
                         if (err) throw err; 
                         

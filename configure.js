@@ -17,6 +17,7 @@ var apiGenKey = function(length) {
     
 
 var messages = {
+  app: "Configuring Basic App Info...\n".green,
   db: "Configuring MongoDB Connection...\n".green,
   api: "Configuring API Server...\n".green,
   gui: "Configuring GUI Server...\n".green,
@@ -26,13 +27,29 @@ var messages = {
 // Define what we what entered
 var schema = {
   properties: {
+    appName: {
+      description: messages.app+'App Name:'.blue,
+      default: 'Hapi Dash'
+    },
+    appUrl: {
+      description: 'App Url:'.blue,
+      default: 'http://localhost:3030',
+      before: function removeLastSlash (url) {
+          if (url.substring(url.length-1) == "/")
+          {
+              url = url.substring(0, url.length-1);
+          }
+
+          return url;
+      }
+    },
     apiHost: {
       description: messages.api+'API host:'.blue,
       default: '127.0.0.1'
     },
     apiPort: {
       description: 'API port:'.blue,
-      default: '3030'
+      default: '3000'
     },
     apiCoreId: {
       description: 'API Core ID:'.blue,
@@ -54,7 +71,7 @@ var schema = {
     },
     guiPort: {
       description: 'GUI port:'.blue,
-      default: '3020'
+      default: '3030'
     },
     dbHost: {
       description: messages.db+'Mongo host:'.blue,
@@ -96,6 +113,10 @@ prompt.get(schema, function (err, result) {
   //
   if(result) {
     var config = {
+      app: {
+        name: result.appName,
+        url: result.appUrl
+      },
       db: {
         host: result.dbHost,
         port: result.dbPort,
@@ -138,7 +159,6 @@ prompt.get(schema, function (err, result) {
       });
       
     });
-    console.log(config)
   } else {
     console.log("\nAborted configuration!")
   }
