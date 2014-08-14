@@ -18,7 +18,7 @@ module.exports = function(server, config) {
     var goodOptions = {
         subscribers: {
             console: ['ops', 'request', 'log', 'error'],
-            'tmp/logs/': ['ops', 'request', 'log', 'error']
+            // 'tmp/logs/': ['ops', 'request', 'log', 'error']
         }
     };
     // The Assets Configuaration Options
@@ -64,7 +64,9 @@ module.exports = function(server, config) {
             options: {
                 db: db,
                 email: config.email,
-                apiIP: config.api.host+':'+config.api.port
+                apiIP: config.api.host+':'+config.api.port,
+                app: config.app,
+                coreCreds: config.coreCreds
             }
         },
         {
