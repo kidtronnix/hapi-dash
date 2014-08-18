@@ -43,9 +43,24 @@ $ git clone https://github.com/smaxwellstewart/hapi-dash.git
 $ cd hapi-dash
 $ npm install
 ```
+#### Configure
+
+Before the application can be run you must generate a configuration file:
+
+```bash
+$ node configure.js
+```
+
 #### Starting
 
-The recommended way to sart the servers is using `pm2`. It is a node process mananger that will take care of running your process like services. It is very powerful and straight foward to use.
+To simply start both servers:
+
+```bash
+$ node servers/api/server.js
+$ node servers/gui/server.js
+```
+
+There are a few approaches to robustly starting the app. The recommended way to sart the servers is using `pm2`. It is a node process mananger that will take care of running your process like services. It is very powerful and straight foward to use.
 
 To install run:
 ```bash
