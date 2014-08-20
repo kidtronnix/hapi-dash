@@ -1,24 +1,24 @@
 {
-  "name": "hapi-ninja",
-  "description": "Boilerplate Hapi server example. Node.js, Hapi, and Swig.",
-  "version": "0.2.0",
-  "author": "Saul Maddox",
+  "name": "hapi-dash",
+  "description": "Boilerplate Hapi Web and API Server Example, with frontend dashboard.",
+  "version": "0.0.1",
+  "author": "Simon Maxwell-Stewart",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/poeticninja/hapi-ninja.git"
+    "url": "https://github.com/smaxwellstewart/hapi-dash.git"
   },
-  "main": "server.js",
+  "main": "start.js",
   "engines": {
     "node": "0.10.x"
   },
   "scripts": {
-    "start": "node server.js",
-    "postinstall": "bower install"
+    "start": "node start.js"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "bower": "~1.3.5",
+    "extend": "^1.3.0",
     "good": "~2.1.2",
     "hapi": "^6.2.1",
     "hapi-assets": "~0.2.0",
