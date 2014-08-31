@@ -1,6 +1,5 @@
 var prompt = require('prompt');
 var fs = require('fs');
-
 // Remove annoying "prompt:"
 prompt.message = "";
 prompt.delimiter = "";

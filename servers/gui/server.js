@@ -16,8 +16,12 @@ var routes = require('./config/routes')(server);
 // Add the server routes
 server.route(routes);
 
+if (!module.parent) {
+    server.start(function() {
+        var message = 'GUI started at: ' + server.info.uri;
+        console.log(message);
+    });
+}
 
-server.start(function() {
-    //Log to the console the host and port info
-    console.log('GUI started at: ' + server.info.uri);    
-});
+module.exports = server;
+

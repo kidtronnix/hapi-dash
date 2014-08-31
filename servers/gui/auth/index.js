@@ -3,7 +3,7 @@
  */
 
 var Joi = require('joi');
-var Bcrypt = require('bcrypt-nodejs');
+var Bcrypt = require('bcryptjs');
 var Jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer');
 var Nipple = require('nipple');
