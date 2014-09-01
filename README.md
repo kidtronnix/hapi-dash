@@ -48,7 +48,44 @@ $ npm install
 Before the application can be run you must generate a configuration file:
 
 ```bash
-$ node configure.js
+$ node bin/configure.js
+```
+
+Warning! There is a known error for node v0.11.x when running the configure.js script. You can configure the app by hand by saving the following to config.js in the root folder:
+
+```js
+// config.js
+module.exports = {
+    "app": {
+        "name": "Hapi Dash",
+        "url": "http://localhost:3030"
+    },
+    "db": {
+        "host": "127.0.0.1",
+        "port": "27017",
+        "name": "hapi-dash"
+    },
+    "api": {
+        "host": "127.0.0.1",
+        "port": "3000"
+    },
+    "coreCreds": {
+        "id": "core",
+        "key": "9TKUwfKHIkNbF9XbGdDudA3fiXzxJg4tHATYJrr16vMENNyX9UUvbNkeeRRxQHC9",
+        "algorithm": "sha256"
+    },
+    "gui": {
+        "host": "0.0.0.0",
+        "port": "3030"
+    },
+    "email": {
+        "service": "Gmail",
+        "auth": {
+            "user": "hapi.dashboard@gmail.com",
+            "pass": "mysecretpass"
+        }
+    }
+}
 ```
 
 #### Starting
@@ -69,14 +106,19 @@ $ npm install -g pm2
 
 Once this is installed we can start both the API and GUI using the start script `start.js`:
 ```bash
-$ node start.js
+$ node bin/start.js
 ```
 
 This will produce the following output:
 
 ![startup output](https://raw.githubusercontent.com/smaxwellstewart/hapi-dash/master/public/img/process_start.png)
 
-Alternatively you can use `supervisor` to watch for file changes and restart the server, [https://github.com/isaacs/node-supervisor](https://github.com/isaacs/node-supervisor). It is not as pwerful and not recommened. 
+To stop the pm2 processes you can run:
+```bash
+$ node bin/stop.js
+```
+
+Alternatively you can use `supervisor` to watch for file changes and restart the server, [https://github.com/isaacs/node-supervisor](https://github.com/isaacs/node-supervisor). It is not as powerful and not recommened. 
 
 To install run:
 ```bash
@@ -110,16 +152,6 @@ DashGum is a simple & elegant admin panel. It comes with 15 pages to start your 
 With DashGum you have charts, tables, a lot of panels, calendars, notifications, to do lists and more. Grab our free theme and enjoy it.
 
 If you need more, see the [Premium Version](http://gridgum.com/themes/dashgum-bootstrap-dashboard/) with tons of features more. With 33 HTMLs and more than 40 plugins, the premium version comes with 4 different chart plugins, Email pages, Chat pages, maps, advanced forms and tables, file uploaders, inline editor, pricing tables, complete profile page and more.
-
-## RESTful Resource Endpoints
-
-The Mongo-Crud module instantly adds the following functionality to any mongo db...
-
-* Plug 'n' play CRUD Routes
-* Access control
-* Set custom fields to hash and/or timestamp at doc creation, if required
-
-Check the [readme](https://github.com/smaxwellstewart/hapi-dash/tree/master/lib/mongo-crud) for more info on how to add and configure CRUD routes.
 
 ## Auth
 
@@ -159,6 +191,9 @@ var routeConfig = {
 
 ## Plugins
 The Hapi plugins that are being used.
+
+### Toothache
+A Hapi plugin that removes the toothache from creating CRUD endpoints for MongoDB. [https://github.com/smaxwellstewart/toothache](https://github.com/smaxwellstewart/toothache)
 
 #### Hapi-Named-Routes
 Added names to the routes. This allows you to have access to the path in the templates just by using the `path.nameofroute` variable. [https://github.com/poeticninja/hapi-named-routes](https://github.com/poeticninja/hapi-named-routes)

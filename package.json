@@ -1,7 +1,7 @@
 {
   "name": "hapi-dash",
   "description": "Boilerplate Hapi Web and API Server Example, with frontend dashboard.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Simon Maxwell-Stewart",
   "private": false,
   "repository": {
@@ -46,7 +46,6 @@
     "gulp-imagemin": "~0.6.1",
     "gulp-minify-css": "~0.3.4",
     "gulp-uglify": "~0.3.0",
-    "gulp-util": "~2.2.17",
-    "lab": "^4.1.0"
+    "gulp-util": "~2.2.17"
   }
 }
