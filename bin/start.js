@@ -1,5 +1,5 @@
 var exec = require('child_process').exec;
-var config = require('./config')
+var config = require('../config')
 
 // This is where we launch all of our different servers.
 // They are on different processes so scaling parts of our web app is more manageable
@@ -12,40 +12,14 @@ var config = require('./config')
 
 
 
-
-var stopApi =  exec('pm2 delete "'+config.app.name+' API"', function(err, stdout, stderr) {
-	// if (err) return console.log(err)
-});
-var stopGui = exec('pm2 delete "'+config.app.name+' GUI"', function(err, stdout, stderr) {
-	// if (err) return console.log(err)
-});
-var stoppedApi = false;
-var stoppedGui = false;
-
-// Event handelrs for stop executions
-stopApi.on('close', function (data) {
-	stoppedApi = true;
-
-	if(stoppedApi && stoppedGui) {
-		start()
-	}
-});
-
-stopGui.on('close', function (data) {
-  	stoppedGui = true;
-  	if(stoppedApi && stoppedGui) {
-		start()
-	}
-});
-
 // Start up function
 var start = function() {
-	var startApi = exec('pm2 start servers/gui/server.js --watch --name "'+config.app.name+' GUI" -e tmp/logs/gui-err.log -o tmp/logs/gui.log -f',
+	var startApi = exec('pm2 start '+__dirname+'/../servers/gui/server.js --watch --name "'+config.app.name+' GUI" -e tmp/logs/gui-err.log -o tmp/logs/gui.log -f -x',
 		function(err, stdout, stderr) {
 			if (err) return console.log(err)
 		}
 	);
-	var startGui = exec('pm2 start servers/api/server.js --watch --name "'+config.app.name+' API" -e tmp/logs/api-err.log -o tmp/logs/api.log -f',
+	var startGui = exec('pm2 start '+__dirname+'/../servers/api/server.js --watch --name "'+config.app.name+' API" -e tmp/logs/api-err.log -o tmp/logs/api.log -f -x',
 		function(err, stdout, stderr) {
 			if (err) return console.log(err)
 		}
@@ -79,3 +53,5 @@ var list = function() {
 		console.log(data);
 	})
 }
+
+start();

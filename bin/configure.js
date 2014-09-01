@@ -1,6 +1,5 @@
 var prompt = require('prompt');
 var fs = require('fs');
-
 // Remove annoying "prompt:"
 prompt.message = "";
 prompt.delimiter = "";
@@ -146,14 +145,14 @@ prompt.get(schema, function (err, result) {
 
     // Text to save to config.js
     var text = "module.exports = "+JSON.stringify(config, null, 4)
-    fs.exists('config.js', function (exists) {
+    fs.exists(__dirname+'/../config.js', function (exists) {
 
       if(exists) {
-        fs.renameSync('config.js', 'config.old.js')
+        fs.renameSync(__dirname+'/../config.js', __dirname+'/../config.old.js')
         console.log('Backed up old config to config.old.js');
       } 
 
-      fs.writeFile('config.js', text, function (err) {
+      fs.writeFile(__dirname+'/../config.js', text, function (err) {
         if (err) return console.log(err);
         console.log('Saved configuration: ', config);
       });

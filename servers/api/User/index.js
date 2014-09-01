@@ -3,24 +3,15 @@
  */
 
  // Packages for validation
-var Hapi = require('hapi');
 var Joi = require('joi');
 
-
-var apiGenKey = function(length) {
-    // Just produces random string using these chars
-    var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
-    return result;
-}
-
 // Internal config stuff
-var internals = {
-    // All config for mongo-crud
-    CRUD: {
+var CRUD = {
+    collection: 'users',
+    create: {
         bcrypt: 'password',
-        create: Joi.object().keys({
+        date: 'created',
+        payload: Joi.object().keys({
             email: Joi.string().required(),
             password: Joi.string().required(),
             fname: Joi.string().required(),
@@ -28,7 +19,15 @@ var internals = {
             access: Joi.string(),
             apiToken: Joi.string().required(),
         }),
-        update: Joi.object().keys({
+        defaults: {
+            access: 'normal',
+            activated: false
+        },
+    },
+    update: {
+        bcrypt: 'password',
+        date: 'updated',
+        payload: Joi.object().keys({
             password: Joi.string(),
             fname: Joi.string(),
             lname: Joi.string(),
@@ -36,16 +35,10 @@ var internals = {
             access: Joi.string(),
             guiToken: [Joi.string(), Joi.boolean()],
             forgotToken: [Joi.string(), Joi.boolean()]
-        }),
-        defaults: {
-            access: 'normal',
-            guiToken: false,
-            forgotToken: false,
-            activated: false
-        },
-        validationOpts: {
-            abortEarly: false
-        }
+        })
+    },    
+    validationOpts: {
+        abortEarly: false
     }
 };
 
@@ -53,10 +46,10 @@ var internals = {
 exports.register = function(plugin, options, next) {
 
     // Add db to our config
-    internals.CRUD.db = options.db;
+    CRUD.db = options.db;
 
-    // Require MongoCrud functions
-    var MongoCrud = require(__dirname+'/../../../lib/mongo-crud')(internals.CRUD);
+    // Require User functions
+    var User = require('toothache')(CRUD);
 
     var apiGenKey = function(request, next) {
         var generate = function(length) {
@@ -74,99 +67,73 @@ exports.register = function(plugin, options, next) {
         next(apiKey);
     }
     
-    var create = function (plugin, next) {
-        return {
-            auth: 'core',
-            pre: [
-                { method: apiGenKey, assign: 'apiGenKey' }
-            ],
-            handler: MongoCrud.create,
-        }
-    };
-
-    var all = function (plugin, next) {
-        return {
-            auth: 'core',
-            handler: MongoCrud.getAll
-        }
-    };
-    
-    var get = function (plugin, next) {
-        
-        return {
-            auth: 'core',
-            handler: MongoCrud.get,
-            validate: {
-                params: {
-                    id: Joi.string().min(12)
-                }
-            }
-        }
-    };
-
-    var update = function (plugin, next) {
-        
-        return {
-            auth: 'core',
-            handler: MongoCrud.update,
-            validate: {
-                params: {
-                    id: Joi.string().min(12)
-                }
-            }
-        }
-    };
-
-    var del = function (plugin, next) {
-        
-        return {
-            auth: 'core',
-            handler: MongoCrud.del,
-            validate: {
-                params: {
-                    id: Joi.string().min(12)
-                }
-            }
-        }
-    };
-
-
-    
     // Create
     plugin.route({
         path: "/api/user",
         method: "POST",
-        config: create()
+        config: {
+            auth: 'core',
+            pre: [
+                { method: apiGenKey, assign: 'apiGenKey' }
+            ],
+            handler: User.create
+        }
     });
     
-    // Read
+    // Get all
     plugin.route({
         path: "/api/user/{id}",
         method: "GET",
-        config: get()
+        config: {
+            auth: 'core',
+            handler: User.get,
+            validate: {
+                params: {
+                    id: Joi.string().min(12)
+                }
+            }
+        }
     });
 
+    // Get ind.
     plugin.route({
         path: "/api/user",
         method: "GET",
-        config: all()
+        config: {
+            auth: 'core',
+            handler: User.getAll
+        }
     });
 
     // Update
     plugin.route({
         path: "/api/user/{id}",
         method: "PUT",
-        config: update()
+        config: {
+            auth: 'core',
+            handler: User.update,
+            validate: {
+                params: {
+                    id: Joi.string().min(12)
+                }
+            }
+        }
     });
 
     // Delete
     plugin.route({
         path: "/api/user/{id}",
         method: "DELETE",
-        config: del()
+        config: {
+            auth: 'core',
+            handler: User.del,
+            validate: {
+                params: {
+                    id: Joi.string().min(12)
+                }
+            }
+        }
     });
 
-    next();
-
-    
+    next(); 
 }

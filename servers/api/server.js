@@ -110,6 +110,13 @@ apiServer.pack.register([
 	if (err) throw err;
 });
 
-apiServer.start();
-var message = 'Api started at: ' + apiServer.info.uri;
-console.log(message);
+if (!module.parent) {
+    apiServer.start(function() {
+        var message = 'API started at: ' + apiServer.info.uri;
+        console.log(message);
+    });
+}
+
+module.exports = apiServer;
+
+
