@@ -5,14 +5,28 @@ module.exports = function(server, config) {
     // DB Connection
     var MongoDB = require('mongodb').Db;
     var Server = require('mongodb').Server;
+    
+    var connected = false;
     var db = new MongoDB(config.db.name, new Server(config.db.host, config.db.port, {auto_reconnect: true}), {w: 1});
     db.open(function(e, d) {
         if (e) {
             console.log(e);
-        } else{
+        } else if (config.db.un != "" && config.db.pw != "") {
+            db.authenticate(config.db.un, config.db.pw, function(err, result){
+                if (err) {
+                    console.log(err);
+                } else {
+                    connected = true;
+                }
+            });
+        } else {
+            connected = true;
+        }
+        if (connected) {
             console.log('connected to database :: '+config.db.name);
         }
     })
+
 
     // Options to pass into the 'Good' plugin
     var goodOptions = {

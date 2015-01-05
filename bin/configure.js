@@ -84,6 +84,14 @@ var schema = {
       description: "Mongo db name:".blue,
       default: 'hapi-dash'
     },
+    dbUn: {
+      description: "Mongo db username (optional):".blue,
+      default: ''
+    },
+    dbPw: {
+      description: "Mongo db password (optional):".blue,
+      default: ''
+    },
     mailService: {
       description: messages.email+'Email service:'.blue,
       default: 'Gmail'
@@ -119,7 +127,9 @@ prompt.get(schema, function (err, result) {
       db: {
         host: result.dbHost,
         port: result.dbPort,
-        name: result.dbName
+        name: result.dbName,
+        un: result.dbUn,
+        pw: result.dbPw
       },
       api: {
         host: result.apiHost,
