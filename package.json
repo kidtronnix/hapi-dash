@@ -33,7 +33,7 @@
     "marked": "^0.3.2",
     "mongodb": "^1.4.7",
     "nipple": "^2.5.3",
-    "nodemailer": "1.0.2",
+    "nodemailer": "1.4.0",
     "prompt": "^0.2.13",
     "require-directory": "~1.2.0",
     "socket.io": "^1.0.6",
