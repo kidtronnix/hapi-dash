@@ -14,12 +14,12 @@ var config = require('../config')
 
 // Start up function
 var start = function() {
-	var startApi = exec('pm2 start '+__dirname+'/../servers/gui/server.js --watch --name "'+config.app.name+' GUI" -e tmp/logs/gui-err.log -o tmp/logs/gui.log -f -x',
+	var startApi = exec('pm2 start '+__dirname+'/../servers/api/server.js --watch --name "'+config.app.name+' API" -e tmp/logs/api-err.log -o tmp/logs/api.log -f -x',
 		function(err, stdout, stderr) {
 			if (err) return console.log(err)
 		}
 	);
-	var startGui = exec('pm2 start '+__dirname+'/../servers/api/server.js --watch --name "'+config.app.name+' API" -e tmp/logs/api-err.log -o tmp/logs/api.log -f -x',
+	var startGui = exec('pm2 start '+__dirname+'/../servers/gui/server.js --watch --name "'+config.app.name+' GUI" -e tmp/logs/gui-err.log -o tmp/logs/gui.log -f -x',
 		function(err, stdout, stderr) {
 			if (err) return console.log(err)
 		}
