@@ -36,21 +36,21 @@ var CRUD = {
             guiToken: [Joi.string(), Joi.boolean()],
             forgotToken: [Joi.string(), Joi.boolean()]
         })
-    },    
+    },
     validationOpts: {
         abortEarly: false
     }
 };
 
 
-exports.register = function(plugin, options, next) {
+exports.register = function(server, options, next) {
 
     // Add db to our config
     CRUD.db = options.db;
 
     // Require User functions
     var User = require('toothache')(CRUD);
-
+    console.log(User);
     var apiGenKey = function(request, next) {
         var generate = function(length) {
             // Just produces random string using these chars
@@ -66,9 +66,9 @@ exports.register = function(plugin, options, next) {
         request.payload.apiToken = apiKey;
         next(apiKey);
     }
-    
+
     // Create
-    plugin.route({
+    server.route({
         path: "/api/user",
         method: "POST",
         config: {
@@ -79,9 +79,9 @@ exports.register = function(plugin, options, next) {
             handler: User.create
         }
     });
-    
+
     // Get all
-    plugin.route({
+    server.route({
         path: "/api/user/{id}",
         method: "GET",
         config: {
@@ -96,17 +96,17 @@ exports.register = function(plugin, options, next) {
     });
 
     // Get ind.
-    plugin.route({
+    server.route({
         path: "/api/user",
         method: "GET",
         config: {
             auth: 'core',
-            handler: User.getAll
+            handler: User.find
         }
     });
 
     // Update
-    plugin.route({
+    server.route({
         path: "/api/user/{id}",
         method: "PUT",
         config: {
@@ -121,7 +121,7 @@ exports.register = function(plugin, options, next) {
     });
 
     // Delete
-    plugin.route({
+    server.route({
         path: "/api/user/{id}",
         method: "DELETE",
         config: {
@@ -135,5 +135,10 @@ exports.register = function(plugin, options, next) {
         }
     });
 
-    next(); 
+    next();
 }
+
+exports.register.attributes = {
+    name: 'user',
+    version: '1.0.0'
+};
