@@ -1,3 +1,7 @@
+### DEPRECATION NOTICE!
+
+My efforts are now focused on [lummox](http://github.com/smaxwellstewart/lummox) the remake of what this could never be!
+
 Hapi Dash
 ==========
 
