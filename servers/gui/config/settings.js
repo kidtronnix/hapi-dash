@@ -8,14 +8,10 @@ rootPath = path.normalize(__dirname + '/../../..');
 module.exports = {
     root: rootPath,
     port: parseInt(process.env.PORT, 10) || 3020,
-    hapi: {
-        options: {
-            views: {
-                path: './servers/gui/views',
-                engines: {
-                    html: require('swig')
-                }
-            }
+    vision: {
+        path: './servers/gui/views',
+        engines: {
+            html: require('swig')
         }
     }
 }

@@ -23,7 +23,7 @@ exports.register = function(plugin, options, next) {
     var API = {
         call: function(opts) {
             var url = 'http://'+options.apiIP+opts.url;
-            var requestOptions = {                   
+            var requestOptions = {
                 headers: { 'content-type':'application/json'}
             };
 
@@ -34,7 +34,7 @@ exports.register = function(plugin, options, next) {
             // Add auth
             var header = Hawk.client.header(url, opts.method, { credentials: opts.credentials });
             requestOptions.headers.Authorization = header.field;
-            
+
             // Make call
             if(opts.method === 'POST')
             {
@@ -78,7 +78,7 @@ exports.register = function(plugin, options, next) {
                         var collection = db.collection('users');
                         collection.findOne({"email": uDeets.email}, function(err, user) {
                             if(err) throw err;
-                       
+
                             // Check we have a user
                             if(user) {
 
@@ -100,8 +100,8 @@ exports.register = function(plugin, options, next) {
                                     },
                                     credentials: options.coreCreds,
                                     callback: function (err, res, payload) {
-                                        
-                                        // Update user to be 
+
+                                        // Update user to be
                                         var link = options.app.url+"/reset/"+token;
 
                                         // setup e-mail data with unicode symbols
@@ -130,15 +130,15 @@ exports.register = function(plugin, options, next) {
                                     }
                                 });
 
-                                     
+
                             } else {
                                 // Throw error if we didn't find an email
                                 next({error: true, details: 'Incorrect email'}).type('application/json');
-                            }                   
+                            }
                         });
                     }
-                })        
-               
+                })
+
             }
         }
     };
@@ -147,6 +147,7 @@ exports.register = function(plugin, options, next) {
 
         return {
             handler: function(request, next) {
+
 
                 var newUser = request.payload;
 
@@ -160,6 +161,7 @@ exports.register = function(plugin, options, next) {
 
                 // We got everything we need to create a new user
                 Joi.validate(newUser, validSchema, {abortEarly: false}, function (err, value) {
+
                     if(err !== null) {
                         console.log(err)
 
@@ -171,9 +173,9 @@ exports.register = function(plugin, options, next) {
                                 message += 'Passwords must match. '
                             } else {
                                 message += _message.substr(0, 1).toUpperCase() + _message.substr(1) +'. ';
-                            }  
+                            }
                         }
-                                           
+
                         return next({error: true, details: message}).type('application/json');
                     } else {
                         delete newUser.password2;
@@ -184,8 +186,11 @@ exports.register = function(plugin, options, next) {
                             payload: newUser,
                             credentials: options.coreCreds,
                             callback: function(err, res, payload) {
-                                if (err) throw err;
 
+                                if (err) throw err;
+                                console.log('err: ' + err);
+                                // console.log('res: ', res);
+                                console.log('payload: ', payload);
                                 var response = JSON.parse(payload);
 
                                 if(response.error) {
@@ -214,10 +219,11 @@ exports.register = function(plugin, options, next) {
                                     return next({error: false, details: 'Success! An activation email has been sent to you.'}).type('application/json');
                                 }
                             }
-                        });                      
+                        });
                     }
                 })
-            }
+
+          }
         }
     };
 
@@ -244,16 +250,16 @@ exports.register = function(plugin, options, next) {
                                 message += 'Passwords must match. '
                             } else {
                                 message += _message.substr(0, 1).toUpperCase() + _message.substr(1) +'. ';
-                            }  
+                            }
                         }
-                                           
+
                         return next({error: true, details: message}).type('application/json');
                     } else {
 
                         var collection = db.collection('users');
                         collection.findOne({"email": changePass.email}, function(err, user) {
                             if(err) throw err;
-                            // We are only going to change if we 
+                            // We are only going to change if we
                             // 1. have a user
                             // 2. we have the same token in DB
                             // 3. Token is valid and not expired
@@ -271,7 +277,7 @@ exports.register = function(plugin, options, next) {
                                             payload: payload,
                                             credentials: options.coreCreds,
                                             callback: function(err, res, payload) {
-                                                if (err) throw err; 
+                                                if (err) throw err;
                                                 next({error: false, details: 'Changed Password'});
                                             }
                                         });
@@ -281,9 +287,9 @@ exports.register = function(plugin, options, next) {
                             } else {
                                 next({error: true, details: 'Incorrect Token'});
                             }
-                        })             
+                        })
                     }
-                })       
+                })
             }
         }
     };
@@ -307,7 +313,7 @@ exports.register = function(plugin, options, next) {
             var collection = db.collection('users');
             collection.findOne({"email": request.payload.email}, function(err, user) {
                 if(err) throw err;
-                
+
                 // Check we have a user and correct password
                 if(!user || !Bcrypt.compareSync(request.payload.password, user.password) ) {
                     message = 'Invalid email or password';
@@ -319,12 +325,12 @@ exports.register = function(plugin, options, next) {
                         password: request.payload.password
                     });
                     error = false;
-                    message = 'Successfully authenticated!';    
+                    message = 'Successfully authenticated!';
                 }
 
                 return reply({error: error, details: message})
             })
-        }       
+        }
     };
 
     var logout = function (request, reply) {
@@ -347,8 +353,8 @@ exports.register = function(plugin, options, next) {
                     payload: {activated: true},
                     credentials: options.coreCreds,
                     callback: function(err, res, payload) {
-                        if (err) throw err; 
-                        
+                        if (err) throw err;
+
                         return reply.redirect('/login/activated');
                     }
                 });
@@ -478,4 +484,8 @@ exports.register = function(plugin, options, next) {
 
 
     next();
+}
+
+exports.register.attributes = {
+  pkg: require('./package.json')
 }

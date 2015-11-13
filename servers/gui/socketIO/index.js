@@ -9,7 +9,7 @@ var numUsers = 0;
 
 exports.register = function(plugin, options, next) {
     // this is the hapi specific binding
-    io = socketIO.listen(plugin.servers[0].listener,{ log: false });
+    io = socketIO.listen(plugin.listener,{ log: false });
 
     io.on('connection', function (socket) {
 	  var addedUser = false;
@@ -43,7 +43,7 @@ exports.register = function(plugin, options, next) {
 	    socket.emit('users', usernames);
 
 	  });
-	  
+
 	  // when the client emits 'typing', we broadcast it to others
 	  socket.on('typing', function () {
 	    socket.broadcast.emit('typing', {
@@ -75,4 +75,9 @@ exports.register = function(plugin, options, next) {
 	    }
 	  });
 	});
+}
+
+exports.register.attributes = {
+	name: 'socketIO',
+	version: '0.0.0'
 }

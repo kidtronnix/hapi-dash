@@ -90,7 +90,7 @@ var getCredentials = function (id, callback) {
 var goodOptions = {
     reporters: [{
         reporter: require('good-console'),
-        events: { ops: '*', request: '*', log: '*', error: '*' }
+        events: { ops: '*', response: '*', log: '*', error: '*' }
     }]
 };
 

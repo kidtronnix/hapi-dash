@@ -29,6 +29,7 @@
     "hapi-cache-buster": "~0.4.0",
     "hapi-named-routes": "~0.3.0",
     "hawk": "^4.0.0",
+    "inert": "^3.2.0",
     "joi": "^7.0.0",
     "jsonwebtoken": "^5.4.1",
     "marked": "^0.3.2",
@@ -39,7 +40,8 @@
     "require-directory": "~2.1.1",
     "socket.io": "^1.0.6",
     "swig": "~1.4.2",
-    "toothache": "^1.1.2"
+    "toothache": "^2.0.0",
+    "vision": "^4.0.1"
   },
   "devDependencies": {
     "gulp": "~3.9.0",

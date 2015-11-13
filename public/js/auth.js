@@ -20,11 +20,11 @@ $('form#login').submit(function (e) {
     }
   });
 });
-
+console.log('here')
 // REGISTER
 $('form#register').submit(function (e) {
   e.preventDefault();
-
+  console.log('attempting register')
   var payload = {
     fname: $('#fname').val(),
     lname: $('#lname').val(),
@@ -34,16 +34,16 @@ $('form#register').submit(function (e) {
   }
 
   $.post('/register', payload).done(function (result) {
-    console.log(result);
     if(result.error) {
-     
-      $.notify(result.details, 'error'); 
+      console.error('could NOT register', result);
+      $.notify(result.details, 'error');
     } else {
+      console.log('registered', result);
       $.notify(result.details, 'success');
       setTimeout(function(){
         window.location.href = '/';
       }, 3000)
-      
+
     }
   });
 });
